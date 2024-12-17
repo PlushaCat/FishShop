@@ -15,30 +15,60 @@ using System.Windows.Shapes;
 
 namespace FishShop
 {
-    /// <summary>
-    /// Логика взаимодействия для Authorization.xaml
-    /// </summary>
+
     public partial class Authorization : Page
     {
         public Authorization()
         {
             InitializeComponent();
             ShowsNavigationUI = false;
+            DatabaseManager.entity = new Entities();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            NavigationService nav;
-            nav = NavigationService.GetNavigationService(this);
-            
-            MainWindow page = new MainWindow();
-            page.ShowsNavigationUI = false;
-            nav.Navigate(page);
-        }
+            try
+            {
+                string login = LoginBox.Text.Trim();
+                string password = PasswordBox.Text.Trim();
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
+                if (!string.IsNullOrEmpty(login) && login.Length >= 3 && login.Length <= 50)
+                {
+                    if (!string.IsNullOrEmpty(password) && 3 <= password.Length && password.Length <= 50)
+                    {
+                        var userDb = DatabaseManager.entity.users.FirstOrDefault(x => x.login == login && x.password == password);
+                        if (userDb.iduser != 0)
+                        {
+                            DatabaseManager.authUserId = userDb.iduser;
+                            DatabaseManager.staff = userDb.staff;
+                            MessageBox.Show("Успешный вход");
 
+                            NavigationService nav;
+                            nav = NavigationService.GetNavigationService(this);
+
+                            MainWindow page = new MainWindow();
+                            page.ShowsNavigationUI = false;
+                            nav.Navigate(page);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Не можете войти! Возможно, вы ввели неправильный логин или пароль.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Поле пароля пусто!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Поле для входа пусто!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Пользователь не найден");
+            }
         }
     }
 }

@@ -24,8 +24,7 @@ namespace FishShop
                 InitializeComponent();
                 DatabaseManager.entity = new Entities();
                 ListView1.ItemsSource = DatabaseManager.entity.goods.ToList();
-                if (DatabaseManager.staff == 1)
-                    AdminButton.Visibility = Visibility.Visible;
+
 
 
 
@@ -69,38 +68,6 @@ namespace FishShop
                 return FilterObj.name.Contains(filter.Text);
             }
 
-            private void Button_Click(object sender, RoutedEventArgs e)
-            {
-
-                Button button = sender as Button;
-                // Получаем данные текущего элемента
-                var data = button.DataContext as goods;
-
-                var isGoods = DatabaseManager.entity.goods.Any(b => b.idgood == data.idgood);
-                var needGoods = DatabaseManager.entity.basket.FirstOrDefault(b => b.idgood == data.idgood);
-                if (isGoods)
-                {
-                    needGoods.quantity += 1;
-                    DatabaseManager.entity.SaveChanges();
-                    MessageBox.Show("Успешно добавлено");
-                }
-                else
-
-                {
-                    var cartItem = new basket()
-                    {
-                        idbasket = DatabaseManager.authUserId,
-                        idgood = data.idgood,
-                        quantity = 1,
-
-                    };
-                    DatabaseManager.entity.basket.Add(cartItem);
-                    DatabaseManager.entity.SaveChanges();
-                    MessageBox.Show("Успешно добавлено");
-                }
-
-            }
-
             private void filter_TextChanged(object sender, TextChangedEventArgs e)
             {
                 if (filter.Text == null)
@@ -111,12 +78,30 @@ namespace FishShop
 
 
 
-            private void AdminButton_Click(object sender, RoutedEventArgs e)
+        private void ListView1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DatabaseManager.staff == 1)
+            {
+                var item = ListView1.SelectedIndex;
+                DatabaseManager.selecteditemindex = item;
+                NavigationService nav;
+                nav = NavigationService.GetNavigationService(this);
+                AddPage page = new AddPage();
+                nav.Navigate(page);
+            }
+                
+
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (DatabaseManager.staff == 1)
             {
                 NavigationService nav;
                 nav = NavigationService.GetNavigationService(this);
-                MainWindow page = new MainWindow();
+                AdminPage page = new AdminPage();
                 nav.Navigate(page);
+            }
         }
-        }
+    }
 }

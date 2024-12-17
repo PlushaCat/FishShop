@@ -25,6 +25,21 @@ namespace FishShop
         public string description { get; set; }
         public Nullable<int> price { get; set; }
         public string image { get; set; }
+
+        public string CorrectImage
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(image) || String.IsNullOrWhiteSpace(image))
+                {
+                    return "images/picture.png";
+                }
+                else
+                {
+                    return $"images/{image}";
+                }
+            }
+        }
         public Nullable<int> idcategory { get; set; }
     
         public virtual category category { get; set; }
