@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FishShop
+namespace UnitTestProject1
 {
     using System;
     using System.Data.Entity;

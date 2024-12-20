@@ -7,28 +7,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FishShop
+namespace UnitTestProject1
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class goods
+    public partial class orders
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public goods()
+        public orders()
         {
             this.basket = new HashSet<basket>();
         }
     
-        public int idgood { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
-        public Nullable<int> price { get; set; }
-        public string image { get; set; }
-        public Nullable<int> idcategory { get; set; }
+        public int idorder { get; set; }
+        public Nullable<System.DateTime> orderdate { get; set; }
+        public Nullable<int> orderstatus { get; set; }
+        public Nullable<int> iduser { get; set; }
     
-        public virtual category category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<basket> basket { get; set; }
+        public virtual users users { get; set; }
     }
 }

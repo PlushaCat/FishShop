@@ -17,5 +17,32 @@ namespace FishShop
         public static string ImageToAdd;
         public static int selecteditemindex;
 
+
+        public static string AddProduct(string name, int price, string description)
+        {
+            return name;
+        }
+
+        public static string AddUser(string login, string password)
+        {
+            return login;
+        }
+
+        public static bool ValidatePass(string pass)
+        {
+            return true;
+        }
+
+        public static bool FilterProduct(string name)
+        {
+            return true;
+        }
+
+        public static bool AddManufacturer(string name)
+        {
+            return name;
+        }
+
+
     }
 }
